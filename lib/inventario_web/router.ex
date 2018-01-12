@@ -27,6 +27,8 @@ defmodule InventarioWeb.Router do
   scope "/api", InventarioWeb do
     pipe_through([:api, :api_auth])
     resources "/users", UserController, except: [:new, :edit,:create]
+    resources "/products", ProductController, except: [:new, :edit]
+    resources "/packages", PackageController, except: [:new, :edit]
 
   end
 end

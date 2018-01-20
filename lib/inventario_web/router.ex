@@ -29,6 +29,8 @@ defmodule InventarioWeb.Router do
     resources "/users", UserController, except: [:new, :edit,:create]
     resources "/products", ProductController, except: [:new, :edit]
     resources "/packages", PackageController, except: [:new, :edit]
+    resources "/zones", ZoneController, except: [:new, :edit]
+    resources "/zone_type", TypesController, only: [:show, :index]
 
   end
 end

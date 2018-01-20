@@ -49,6 +49,7 @@ defmodule Inventario.Mixfile do
       {:pbkdf2_elixir, "~> 0.12"},
       {:guardian, "~> 0.14.5"},
       {:cors_plug, "~> 1.2"},
+      {:topo, "~> 0.1.0"},
     ]
   end
 

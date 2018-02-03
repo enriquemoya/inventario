@@ -11,7 +11,7 @@ defmodule InventarioWeb.ZoneController do
     render(conn, "index.json", zones: zones)
   end
 
-  def create(conn, %{"zone" => zone_params}) do
+  def create(conn, %{"zone" => %{"code"=> code, "name" => name, "types_id"=> type,"map"=>map} = zone_params}) do
     with {:ok, %Zone{} = zone} <- Zones.create_zone(zone_params) do
       conn
       |> put_status(:created)

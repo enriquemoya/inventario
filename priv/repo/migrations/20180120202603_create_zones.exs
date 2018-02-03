@@ -14,3 +14,5 @@ defmodule Inventario.Repo.Migrations.CreateZones do
     create index(:zones, [:types_id])
   end
 end
+
+#tomar en cuenta espacio entre filas para evitar golpet etc {seguridad}

@@ -9,6 +9,7 @@ defmodule Inventario.Zones.Zone do
     field :name, :string
     field :points, :map
     field :types_id, :id
+    field :mapData, :map, virtual: true
 
     timestamps()
   end
@@ -16,25 +17,34 @@ defmodule Inventario.Zones.Zone do
   @doc false
   def changeset(%Zone{} = zone, attrs) do
     zone
-    |> mapToPoints(attrs)
-    |> cast(attrs, [:points, :code, :name])
-    |> validate_required([:points, :code, :name])
+    |> cast(attrs, [:points, :code, :name,:types_id])
+    |>mapToPoints
+    |> validate_required([:points, :code, :name,:types_id])
   end
 
-  defp mapToPoints(changeset,attrs) do
-    if Map.has_key?(attrs, "map") do
+  def view_changeset(%Zone{} = zone) do
+    zone
+    |> mapToPoints
+  end
+  defp mapToPoints(changeset) do
+    if Map.has_key?(changeset,:points) do
       point = []
-      Enum.each(attrs["map"],fn item ->
+      hasError = false
+      Enum.each(Map.get(changeset.points, "coordinates"),fn item ->
         case item do
-          %{"x" => x,"y"=> y} -> point ++ [{x,y}]
-          _ -> changeset = add_error(changeset,:points,"Empty")
+          %{"x" => _, "y" => _ } ->
+            hasError
+          _ ->
+          hasError = true
         end
       end)
-      if(length(changeset.errors) > 0) do
-        changeset
+      if(hasError) do
+        add_error(changeset, :points, "Empty")
         #else
       else
-        put_change(changeset,:points,%{type: "Polygon", coordinates: point})
+        points = Enum.map(Map.get(changeset.points, "coordinates"), fn %{"x" => x,"y"=> y} -> {x,y} end)
+        mapData = %{type: "Polygon", coordinates: points}
+        changeset = change(changeset, mapData: mapData )
       end
       #else
       else

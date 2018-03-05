@@ -6,6 +6,7 @@ defmodule Inventario.Repo.Migrations.CreateZones do
       add :points, :map
       add :code, :string
       add :name, :string
+      add :height, :float
       add :types_id, references(:types, on_delete: :nothing)
 
       timestamps()

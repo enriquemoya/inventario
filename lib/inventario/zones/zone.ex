@@ -9,6 +9,7 @@ defmodule Inventario.Zones.Zone do
     field :name, :string
     field :points, :map
     field :types_id, :id
+    field :height, :float
     field :mapData, :map, virtual: true
 
     timestamps()
@@ -17,9 +18,9 @@ defmodule Inventario.Zones.Zone do
   @doc false
   def changeset(%Zone{} = zone, attrs) do
     zone
-    |> cast(attrs, [:points, :code, :name,:types_id])
+    |> cast(attrs, [:points, :code, :name,:types_id, :height])
     |>mapToPoints
-    |> validate_required([:points, :code, :name,:types_id])
+    |> validate_required([:points, :code, :name,:types_id, :height])
   end
 
   def view_changeset(%Zone{} = zone) do

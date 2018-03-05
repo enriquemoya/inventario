@@ -14,6 +14,8 @@ defmodule InventarioWeb.ZoneView do
     %{id: zone.id,
       points: zone.points,
       code: zone.code,
-      name: zone.name}
+      name: zone.name,
+      height: zone.height
+    }
   end
 end
